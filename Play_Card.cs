@@ -26,4 +26,20 @@ namespace Card
         public string Type {get => type; set=>type=value;}
 
     }
+    public enum Card_Type
+    {
+        Ace = 1,
+        Two,
+        Three,
+        Four,
+        Five,
+        Six,
+        Seven,
+        Eight,
+        Nine,
+        Ten,
+        Jack,
+        Queen,
+        King,
+    }
 }
