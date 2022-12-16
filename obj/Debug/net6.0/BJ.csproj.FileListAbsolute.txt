@@ -1,0 +1,15 @@
+C:\Users\aflyn\repos\BJ\bin\Debug\net6.0\BJ.exe
+C:\Users\aflyn\repos\BJ\bin\Debug\net6.0\BJ.deps.json
+C:\Users\aflyn\repos\BJ\bin\Debug\net6.0\BJ.runtimeconfig.json
+C:\Users\aflyn\repos\BJ\bin\Debug\net6.0\BJ.dll
+C:\Users\aflyn\repos\BJ\bin\Debug\net6.0\BJ.pdb
+C:\Users\aflyn\repos\BJ\obj\Debug\net6.0\BJ.csproj.AssemblyReference.cache
+C:\Users\aflyn\repos\BJ\obj\Debug\net6.0\BJ.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\aflyn\repos\BJ\obj\Debug\net6.0\BJ.AssemblyInfoInputs.cache
+C:\Users\aflyn\repos\BJ\obj\Debug\net6.0\BJ.AssemblyInfo.cs
+C:\Users\aflyn\repos\BJ\obj\Debug\net6.0\BJ.csproj.CoreCompileInputs.cache
+C:\Users\aflyn\repos\BJ\obj\Debug\net6.0\BJ.dll
+C:\Users\aflyn\repos\BJ\obj\Debug\net6.0\refint\BJ.dll
+C:\Users\aflyn\repos\BJ\obj\Debug\net6.0\BJ.pdb
+C:\Users\aflyn\repos\BJ\obj\Debug\net6.0\BJ.genruntimeconfig.cache
+C:\Users\aflyn\repos\BJ\obj\Debug\net6.0\ref\BJ.dll
