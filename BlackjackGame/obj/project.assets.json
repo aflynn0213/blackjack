@@ -15,11 +15,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\repo\\blackjack\\BJ.csproj",
-      "projectName": "BJ",
-      "projectPath": "C:\\repo\\blackjack\\BJ.csproj",
+      "projectUniqueName": "C:\\repo\\blackjack\\BlackjackGame\\BlackjackGame.csproj",
+      "projectName": "BlackjackGame",
+      "projectPath": "C:\\repo\\blackjack\\BlackjackGame\\BlackjackGame.csproj",
       "packagesPath": "C:\\Users\\lu516e\\.nuget\\packages\\",
-      "outputPath": "C:\\repo\\blackjack\\obj\\",
+      "outputPath": "C:\\repo\\blackjack\\BlackjackGame\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages",

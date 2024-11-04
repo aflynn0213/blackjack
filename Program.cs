@@ -1,66 +1,60 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Collections;
-using System.Timers;
 
-namespace Game
+namespace BlackjackGame
 {
-    class Program
-    {   
-        private static void initialize_game(Player[] players,Dealer _dealer,Deck_Cards deck,int num_players)
+    public class Program
+    {
+        public static void Main(string[] args)
         {
-            for (int i = 0; i < 2; i++)
+            Console.WriteLine("Welcome to Blackjack!");
+
+            int manualPlayers = 0;
+            int aiPlayers = 0;
+
+            while (true)
             {
-                for (int j = 0; j < num_players+1; j++)
+                // Get the number of manual players
+                Console.Write("Enter the number of manual players (1 to 5): ");
+                string manualInput = Console.ReadLine();
+                
+                if (!int.TryParse(manualInput, out manualPlayers) || manualPlayers < 1 || manualPlayers > 5)
                 {
-                    if (j < num_players)
-                    {
-                        if (i==0)
-                        {
-                            Player playa = new Player();
-                            players[j] =  playa;
-                        }
-                        
-                        deck.Get_Card(players,j);
-                        Console.WriteLine("Player#{0} Card#{1} is a {2}", j+1, i+1, players[j].cards[i].Type);
-                       
-                    }
-                    else 
-                    {
-                        deck.Get_Card(_dealer);
-                        
-                        if (i==0)
-                        {
-                            Console.WriteLine("Dealer dealt his first card face down");
-                            continue;
-                        }
-                        else
-                        {
-                            Console.WriteLine("Dealer's Card#{0} is a {1}", i+1, _dealer.cards[i].Type);    
-                        }
-                    }
-
-                        
+                    Console.WriteLine("Invalid input. Please enter a number between 1 and 5.");
+                    continue;
                 }
+
+                // Get the number of AI players
+                Console.Write("Enter the number of AI players (0 to 5): ");
+                string aiInput = Console.ReadLine();
+                
+                if (!int.TryParse(aiInput, out aiPlayers) || aiPlayers < 0 || aiPlayers > 5)
+                {
+                    Console.WriteLine("Invalid input. Please enter a number between 0 and 5.");
+                    continue;
+                }
+
+                // Check if the total number of players is within the allowed range
+                if (manualPlayers + aiPlayers > 5)
+                {
+                    Console.WriteLine("The total number of players cannot exceed 5. Please try again.");
+                    continue;
+                }
+                
+                // Ensure there is at least one manual player
+                if (manualPlayers < 1)
+                {
+                    Console.WriteLine("There must be at least one manual player. Please try again.");
+                    continue;
+                }
+
+                break; // If all validations pass, break out of the loop
             }
-        }
-        static void Main()
-        {
-            var _dealer = new Dealer();
-            var deck = new Deck_Cards();
-           
-            deck.Shuffle_decks();
-            Console.WriteLine("How many players are there?");
-            var num = Console.ReadLine();
-            var num_players = Convert.ToInt32(num);
-            Player[] players = new Player[num_players];
 
-            initialize_game(players,_dealer,deck,num_players); 
+            Console.WriteLine($"Starting a game with {manualPlayers} manual player(s) and {aiPlayers} AI player(s)...");
 
-            Game game = new Game(_dealer,players,deck);
-            
+            // Create and start the Blackjack game with the specified number of players
+            var game = new BlackjackGame.GameLogic.BlackjackGame(manualPlayers, aiPlayers);
+            game.StartGame();
         }
     }
 }
-

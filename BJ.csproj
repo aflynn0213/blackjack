@@ -1,10 +1,21 @@
 <Project Sdk="Microsoft.NET.Sdk">
-
   <PropertyGroup>
     <OutputType>Exe</OutputType>
-    <TargetFramework>net6.0</TargetFramework>
-    <ImplicitUsings>enable</ImplicitUsings>
-    <Nullable>enable</Nullable>
+    <TargetFramework>net5.0</TargetFramework>
+    <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Compile Include="Models\Card.cs" />
+    <Compile Include="Models\Deck.cs" />
+    <Compile Include="Models\Hand.cs" />
+    <Compile Include="Models\CardEnums.cs" />
+    <Compile Include="GameLogic\IPlayer.cs" />
+    <Compile Include="GameLogic\Player.cs" />
+    <Compile Include="GameLogic\AIPlayer.cs" />
+    <Compile Include="GameLogic\Dealer.cs" />
+    <Compile Include="GameLogic\GameEvents.cs" />
+    <Compile Include="GameLogic\BlackjackGame.cs" />
+    <Compile Include="Program.cs" />
+  </ItemGroup>
 </Project>

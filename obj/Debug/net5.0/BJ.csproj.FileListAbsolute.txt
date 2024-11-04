@@ -1,0 +1,16 @@
+C:\repo\blackjack\obj\Debug\net5.0\BJ.csproj.AssemblyReference.cache
+C:\repo\blackjack\obj\Debug\net5.0\BJ.GeneratedMSBuildEditorConfig.editorconfig
+C:\repo\blackjack\obj\Debug\net5.0\BJ.AssemblyInfoInputs.cache
+C:\repo\blackjack\obj\Debug\net5.0\BJ.AssemblyInfo.cs
+C:\repo\blackjack\obj\Debug\net5.0\BJ.csproj.CoreCompileInputs.cache
+C:\repo\blackjack\bin\Debug\net5.0\BJ.exe
+C:\repo\blackjack\bin\Debug\net5.0\BJ.deps.json
+C:\repo\blackjack\bin\Debug\net5.0\BJ.runtimeconfig.json
+C:\repo\blackjack\bin\Debug\net5.0\BJ.runtimeconfig.dev.json
+C:\repo\blackjack\bin\Debug\net5.0\BJ.dll
+C:\repo\blackjack\bin\Debug\net5.0\ref\BJ.dll
+C:\repo\blackjack\bin\Debug\net5.0\BJ.pdb
+C:\repo\blackjack\obj\Debug\net5.0\BJ.dll
+C:\repo\blackjack\obj\Debug\net5.0\ref\BJ.dll
+C:\repo\blackjack\obj\Debug\net5.0\BJ.pdb
+C:\repo\blackjack\obj\Debug\net5.0\BJ.genruntimeconfig.cache
