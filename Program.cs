@@ -52,7 +52,6 @@ namespace BlackjackGame
 
             Console.WriteLine($"Starting a game with {manualPlayers} manual player(s) and {aiPlayers} AI player(s)...");
 
-            // Create and start the Blackjack game with the specified number of players
             var game = new BlackjackGame.GameLogic.BlackjackGame(manualPlayers, aiPlayers);
             game.StartGame();
         }

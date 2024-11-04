@@ -6,32 +6,55 @@ namespace BlackjackGame.Models
 {
     public class Deck
     {
+        private static Deck _instance; // The single instance
+        private static readonly object _lock = new object(); // To ensure thread safety
         private List<Card> cards;
 
-        public Deck()
+        // Private constructor to prevent instantiation
+        private Deck()
         {
             InitializeDeck();
             Shuffle();
         }
 
-        private void InitializeDeck()
+        // Public property to access the singleton instance
+        public static Deck Instance
         {
-            cards = new List<Card>();
-            foreach (Suit suit in Enum.GetValues(typeof(Suit)))
+            get
             {
-                foreach (Rank rank in Enum.GetValues(typeof(Rank)))
+                lock (_lock) // Ensures thread safety for multi-threaded access
                 {
-                    cards.Add(new Card(suit, rank));
+                    return _instance ??= new Deck();
                 }
             }
         }
 
+        // Initializes the deck with four standard decks
+        private void InitializeDeck()
+        {
+            cards = new List<Card>();
+            int numberOfDecks = 4;
+
+            for (int i = 0; i < numberOfDecks; i++)
+            {
+                foreach (Suit suit in Enum.GetValues(typeof(Suit)))
+                {
+                    foreach (Rank rank in Enum.GetValues(typeof(Rank)))
+                    {
+                        cards.Add(new Card(suit, rank));
+                    }
+                }
+            }
+        }
+
+        // Shuffle the deck
         public void Shuffle()
         {
             Random rng = new Random();
             cards = cards.OrderBy(card => rng.Next()).ToList();
         }
 
+        // Deal a card from the deck
         public Card Deal()
         {
             if (cards.Count == 0) throw new InvalidOperationException("The deck is empty!");
@@ -39,5 +62,8 @@ namespace BlackjackGame.Models
             cards.RemoveAt(0);
             return dealtCard;
         }
+
+        // Property to get the number of remaining cards
+        public int RemainingCards => cards.Count;
     }
 }

@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using BlackjackGame.Models;
 
 namespace BlackjackGame.GameLogic
@@ -5,10 +6,15 @@ namespace BlackjackGame.GameLogic
     public interface IPlayer
     {
         string Name { get; set; }
-        Hand Hand { get; }
+        List<Hand> Hands { get; set; } // To support split hands
+        Hand CurrentHand { get; set;} // The active hand
+
+        bool HasStood { get; set; }
         bool IsBust { get; }
         int Total { get; }
-        void Hit (Card card);
-        void Play(Deck deck);
+
+        void Hit(Card card);
+        void DoubleDown(Card card);
+        void Play(Deck deck); // Method for turn logic
     }
 }

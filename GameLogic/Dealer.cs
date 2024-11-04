@@ -39,7 +39,6 @@ namespace BlackjackGame.GameLogic
             if (HasAceShowing)
             {
                 Console.WriteLine("Dealer shows an Ace. Offering insurance to players.");
-                // Logic to offer insurance to each player could go here
             }
         }
     }
