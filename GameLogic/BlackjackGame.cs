@@ -37,7 +37,7 @@ namespace BlackjackGame.GameLogic
             Console.WriteLine("Game started!");
             foreach (var player in players)
             {
-                Console.WriteLine($"{player.Name} Hand: {player.CurrentHand}");
+                Console.WriteLine($"{player.Name}'s Hand: {player.CurrentHand} for a total: {player.Total}");
             }
             Console.WriteLine($"Dealer's visible card: {dealer.Hand.Cards[1]}");
             currentPlayerIndex = 0;
@@ -61,7 +61,7 @@ namespace BlackjackGame.GameLogic
             if (currentPlayerIndex < players.Count)
             {
                 var currentPlayer = players[currentPlayerIndex];
-                Console.WriteLine($"{currentPlayer.Name}'s turn. Hand: {currentPlayer.CurrentHand}");
+                Console.WriteLine($"{currentPlayer.Name}'s turn. Hand: {currentPlayer.CurrentHand} for a total:{currentPlayer.Total}");
 
                 if (currentPlayer is AIPlayer aiPlayer)
                 {
@@ -81,19 +81,17 @@ namespace BlackjackGame.GameLogic
             }
         }
 
-        private void PlayerHits()
+        private void PlayerHits(IPlayer player)
         {
-            var currentPlayer = players[currentPlayerIndex];
-            currentPlayer.Hit(deck.Deal());
-
-            if (currentPlayer.CurrentHand.IsBust)
+            player.Hit(deck.Deal());
+            if (player.CurrentHand.IsBust)
             {
-                Console.WriteLine($"{currentPlayer.Name} busts!");
+                Console.WriteLine($"{player.Name} busts!");
                 NextPlayerOrDealerTurn();
             }
             else
             {
-                CheckPlayerTurn(currentPlayer);
+                CheckPlayerTurn(player);
             }
         }
 
@@ -105,78 +103,38 @@ namespace BlackjackGame.GameLogic
 
         private void CheckPlayerTurn(IPlayer player)
         {
-            // Show available options based on current hand
-            Console.Write($"{player.Name}, choose: '1) hit' or '2) stand'");
-
+            Console.Write($"{player.Name}, choose: '1) hit' or '2) stand' ");
             bool canDoubleDown = player.CurrentHand.Cards.Count == 2;
             bool canSplit = player.CurrentHand.Cards.Count == 2 && player.CurrentHand.Cards[0].Rank == player.CurrentHand.Cards[1].Rank;
 
-            if (canDoubleDown)
-            {
-                Console.Write(" or '3) double down'");
-            }
-
-            if (canSplit)
-            {
-                Console.Write(" or '4) split'");
-            }
+            if (canDoubleDown) Console.Write(" or '3) double down'");
+            if (canSplit) Console.Write(" or '4) split'");
 
             Console.WriteLine();
-            string action = Console.ReadLine();
+            string action = Console.ReadLine()?.Trim().ToLower();
 
-            // Perform the action based on input
-            if (action == "hit")
-                PlayerHits();
-            else if (action == "stand")
-                NextPlayerOrDealerTurn();
-            else if (action == "double down" && canDoubleDown)
-                PlayerDoublesDown(player);
-            else if (action == "split" && canSplit)
-                PlayerSplits(player);
-            else
+            switch (action)
             {
-                Console.WriteLine("Invalid choice. Please type 'hit', 'stand', 'double down', or 'split' if available.");
-                CheckPlayerTurn(player); // Re-prompt if invalid input
+                case "1":
+                    PlayerHits(player);
+                    break;
+                case "2":
+                    Console.WriteLine($"{player.Name}'s final hand: {player.CurrentHand}");
+                    NextPlayerOrDealerTurn();
+                    break;
+                case "3" when canDoubleDown:
+                    player.DoubleDown(deck.Deal());
+                    NextPlayerOrDealerTurn();
+                    break;
+                case "4" when canSplit:
+                    player.SplitHand(deck);
+                    PlaySplitHands(player); // Automatically play split hands
+                    break;
+                default:
+                    Console.WriteLine("Invalid choice. Please enter a valid option.");
+                    CheckPlayerTurn(player);
+                    break;
             }
-        }
-
-        private void PlayerDoublesDown(IPlayer player)
-        {
-            Console.WriteLine($"{player.Name} chose to double down!");
-            
-            // Assume `double` is just adding one more card
-            player.DoubleDown(deck.Deal()); // You may need a method to track the bet as well
-            Console.WriteLine($"{player.Name} final hand after double down: {player.CurrentHand}");
-
-            if (player.IsBust)
-            {
-                Console.WriteLine($"{player.Name} busts on double down!");
-            }
-
-            NextPlayerOrDealerTurn(); // End turn after double down
-        }
-
-        private void PlayerSplits(IPlayer player)
-        {
-            Console.WriteLine($"{player.Name} chose to split!");
-
-            // Split the hand into two separate hands
-            var firstHand = new Hand();
-            var secondHand = new Hand();
-
-            // Assign one card to each hand
-            firstHand.AddCard(player.CurrentHand.Cards[0]);
-            secondHand.AddCard(player.CurrentHand.Cards[1]);
-
-            // Add one card to each new hand from the deck
-            firstHand.AddCard(deck.Deal());
-            secondHand.AddCard(deck.Deal());
-
-            // Replace the original hand with the first hand and save the second hand
-            player.Hands = new List<Hand> { firstHand, secondHand };
-
-            // Play both hands as separate turns
-            PlaySplitHands(player);
         }
 
         private void PlaySplitHands(IPlayer player)
@@ -187,13 +145,14 @@ namespace BlackjackGame.GameLogic
             {
                 player.CurrentHand = hand;
                 Console.WriteLine($"Playing hand: {hand}");
-                
+
                 while (!hand.IsBust && !player.HasStood)
                 {
                     CheckPlayerTurn(player);
                 }
+                player.HasStood = false; // Reset for next hand
             }
-            
+
             NextPlayerOrDealerTurn();
         }
 
@@ -212,15 +171,15 @@ namespace BlackjackGame.GameLogic
 
         private void CleanOutHands()
         {
-            foreach (var player in players)
+            for (int i = 0; i < players.Count; i++)
             {
-                player.Hands.Clear();
-                player.CurrentHand = new Hand();
-                player.Hands.Add(player.CurrentHand);
+                players[i].Hands.Clear(); // Clear all hands for the current player
+                players[i].Hands.Add(new Hand()); // Add a new, empty hand
+                players[i].CurrentHand = players[i].Hands[0];
             }
-
             dealer.Hand.Cards.Clear();
         }
+
         private void EndGame()
         {
             int dealerTotal = dealer.Total;
@@ -257,12 +216,12 @@ namespace BlackjackGame.GameLogic
                 if (action == "n")
                 {
                     Console.WriteLine("Thank you for playing!");
-                    return; // Exit the game loop entirely
+                    return;
                 }
                 else if (action == "y")
                 {
                     CleanOutHands();
-                    StartGame(); // Restart the game
+                    StartGame();
                 }
                 else
                 {

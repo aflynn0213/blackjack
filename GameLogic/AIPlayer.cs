@@ -37,6 +37,28 @@ namespace BlackjackGame.GameLogic
             Hit(card); 
         }
 
+        public void SplitHand(Deck deck)
+        {
+            // Automated split logic for AI
+            Console.WriteLine($"{Name} (AI) is splitting!");
+
+            int currentHandIndex = Hands.IndexOf(CurrentHand);
+
+            var firstHand = new Hand();
+            var secondHand = new Hand();
+
+            firstHand.AddCard(CurrentHand.Cards[0]);
+            secondHand.AddCard(CurrentHand.Cards[1]);
+
+            firstHand.AddCard(deck.Deal());
+            secondHand.AddCard(deck.Deal());
+
+            Hands[currentHandIndex] = firstHand;
+            Hands.Insert(currentHandIndex + 1, secondHand);
+
+            Console.WriteLine($"{Name} (AI) now has two hands.");
+        }
+
         public bool IsBust => CurrentHand.IsBust;
         public int Total => CurrentHand.CalculateTotal();
 

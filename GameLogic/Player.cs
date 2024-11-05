@@ -30,12 +30,38 @@ namespace BlackjackGame.GameLogic
         {
             CurrentHand.AddCard(card);
             Console.WriteLine($"{Name} hits and receives: {card}");
+            Console.WriteLine($"{Name}'s Hand: {CurrentHand} for a total: {Total} ");
         }
 
         public void DoubleDown(Card card)
         {
             Console.WriteLine($"{Name} has doubled down!");
             Hit(card); // Double down should hit and end turn
+        }
+
+        public void SplitHand(Deck deck)
+        {
+            Console.WriteLine($"{Name} chose to split!");
+
+            int currentHandIndex = Hands.IndexOf(CurrentHand);
+
+            // Create two new hands with the cards from the current hand
+            var firstHand = new Hand();
+            var secondHand = new Hand();
+
+            // Copy one card to each new hand
+            firstHand.AddCard(CurrentHand.Cards[0]);
+            secondHand.AddCard(CurrentHand.Cards[1]);
+
+            // Deal one new card to each split hand
+            firstHand.AddCard(deck.Deal());
+            secondHand.AddCard(deck.Deal());
+
+            // Replace the current hand with the first hand and insert the second hand next
+            Hands[currentHandIndex] = firstHand;
+            Hands.Insert(currentHandIndex + 1, secondHand);
+
+            Console.WriteLine($"{Name} now has {Hands.Count} hands.");
         }
 
         public bool IsBust => CurrentHand.IsBust;

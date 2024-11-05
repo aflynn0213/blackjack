@@ -14,7 +14,7 @@ namespace BlackjackGame
             while (true)
             {
                 // Get the number of manual players
-                Console.Write("Enter the number of manual players (1 to 5): ");
+                Console.WriteLine("Enter the number of manual players (1 to 5): ");
                 string manualInput = Console.ReadLine();
                 
                 if (!int.TryParse(manualInput, out manualPlayers) || manualPlayers < 1 || manualPlayers > 5)
@@ -24,7 +24,7 @@ namespace BlackjackGame
                 }
 
                 // Get the number of AI players
-                Console.Write("Enter the number of AI players (0 to 5): ");
+                Console.WriteLine("Enter the number of AI players (0 to 5): ");
                 string aiInput = Console.ReadLine();
                 
                 if (!int.TryParse(aiInput, out aiPlayers) || aiPlayers < 0 || aiPlayers > 5)

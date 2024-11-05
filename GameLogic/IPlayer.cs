@@ -16,5 +16,6 @@ namespace BlackjackGame.GameLogic
         void Hit(Card card);
         void DoubleDown(Card card);
         void Play(Deck deck); // Method for turn logic
+        void SplitHand(Deck deck);
     }
 }
