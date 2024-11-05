@@ -18,6 +18,7 @@ namespace BlackjackGame.GameLogic
         }
 
         public bool HasStood { get; set; } = false;
+        public bool midSplit =>  Hands[Hands.Count-1] != CurrentHand;
 
         public Player()
         {
@@ -30,7 +31,7 @@ namespace BlackjackGame.GameLogic
         {
             CurrentHand.AddCard(card);
             Console.WriteLine($"{Name} hits and receives: {card}");
-            Console.WriteLine($"{Name}'s Hand: {CurrentHand} for a total: {Total} ");
+            Console.WriteLine($"{Name}'s Hand: {CurrentHand} for a total: {CurrentHand.Total} ");
         }
 
         public void DoubleDown(Card card)
@@ -65,10 +66,8 @@ namespace BlackjackGame.GameLogic
         }
 
         public bool IsBust => CurrentHand.IsBust;
-        public int Total => CurrentHand.CalculateTotal();
 
         public virtual void Play(Deck deck) {}
-
         public override string ToString() => $"{Name}'s Hand: {CurrentHand}";
     }
 }

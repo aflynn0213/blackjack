@@ -60,19 +60,20 @@ namespace BlackjackGame.GameLogic
         }
 
         public bool IsBust => CurrentHand.IsBust;
-        public int Total => CurrentHand.CalculateTotal();
 
         public void Play(Deck deck)
         {
             // AI decision logic
-            while (Total < 17)
+            while (CurrentHand.Total < 17)
             {
                 Hit(deck.Deal());
             }
             HasStood = true;
-            Console.WriteLine($"{Name} (AI) stands with total: {Total}");
+            Console.WriteLine($"{Name} (AI) stands with total: {CurrentHand.Total}");
         }
 
+        
+        public bool midSplit =>  Hands[Hands.Count-1] != CurrentHand;
         public override string ToString() => $"{Name}'s Hand: {CurrentHand}";
     }
 }

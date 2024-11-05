@@ -38,6 +38,8 @@ namespace BlackjackGame.Models
 
         public bool IsBust => CalculateTotal() > 21;
 
+        public int Total => CalculateTotal();
+
         public override string ToString() => string.Join(", ", Cards);
     }
 }

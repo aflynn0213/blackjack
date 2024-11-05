@@ -37,7 +37,7 @@ namespace BlackjackGame.GameLogic
             Console.WriteLine("Game started!");
             foreach (var player in players)
             {
-                Console.WriteLine($"{player.Name}'s Hand: {player.CurrentHand} for a total: {player.Total}");
+                Console.WriteLine($"{player.Name}'s Hand: {player.CurrentHand} for a total: {player.CurrentHand.Total}");
             }
             Console.WriteLine($"Dealer's visible card: {dealer.Hand.Cards[1]}");
             currentPlayerIndex = 0;
@@ -61,17 +61,15 @@ namespace BlackjackGame.GameLogic
             if (currentPlayerIndex < players.Count)
             {
                 var currentPlayer = players[currentPlayerIndex];
-                Console.WriteLine($"{currentPlayer.Name}'s turn. Hand: {currentPlayer.CurrentHand} for a total:{currentPlayer.Total}");
+                Console.WriteLine($"{currentPlayer.Name}'s turn. Hand: {currentPlayer.CurrentHand} for a total:{currentPlayer.CurrentHand.Total}");
 
                 if (currentPlayer is AIPlayer aiPlayer)
                 {
-                    // AI player plays automatically
                     aiPlayer.Play(deck);
                     NextPlayerOrDealerTurn();
                 }
                 else
                 {
-                    // Manual player makes choices
                     CheckPlayerTurn(currentPlayer);
                 }
             }
@@ -85,9 +83,16 @@ namespace BlackjackGame.GameLogic
         {
             player.Hit(deck.Deal());
             if (player.CurrentHand.IsBust)
-            {
+            { 
                 Console.WriteLine($"{player.Name} busts!");
-                NextPlayerOrDealerTurn();
+                if (!player.midSplit) 
+                {
+                    NextPlayerOrDealerTurn();
+                }
+                else
+                {
+                    return;
+                }
             }
             else
             {
@@ -120,15 +125,31 @@ namespace BlackjackGame.GameLogic
                     break;
                 case "2":
                     Console.WriteLine($"{player.Name}'s final hand: {player.CurrentHand}");
-                    NextPlayerOrDealerTurn();
+                    if (player.midSplit)
+                    {
+                        player.HasStood = true;
+                        return;
+                    }
+                    else
+                    {
+                        NextPlayerOrDealerTurn();
+                    }
                     break;
                 case "3" when canDoubleDown:
                     player.DoubleDown(deck.Deal());
-                    NextPlayerOrDealerTurn();
+                    if (player.midSplit)
+                    {
+                        player.HasStood = true;
+                        return;
+                    }
+                    else
+                    {
+                        NextPlayerOrDealerTurn();
+                    }
                     break;
                 case "4" when canSplit:
                     player.SplitHand(deck);
-                    PlaySplitHands(player); // Automatically play split hands
+                    PlaySplitHands(player);
                     break;
                 default:
                     Console.WriteLine("Invalid choice. Please enter a valid option.");
@@ -187,24 +208,30 @@ namespace BlackjackGame.GameLogic
 
             foreach (var player in players)
             {
-                int playerTotal = player.Total;
-                Console.WriteLine($"{player.Name}'s final hand: {player.CurrentHand}, total: {playerTotal}");
+                int handNumber = 1;
+                foreach(Hand hand in player.Hands)
+                {
+                    int playerTotal = hand.Total;
+                    Console.WriteLine($"{player.Name}'s hand #{handNumber}: {hand}, total: {playerTotal}");
 
-                if (playerTotal > 21)
-                {
-                    Console.WriteLine($"{player.Name} busts! Dealer wins.");
-                }
-                else if (dealerTotal > 21 || playerTotal > dealerTotal)
-                {
-                    Console.WriteLine($"{player.Name} wins against the dealer!");
-                }
-                else if (playerTotal == dealerTotal)
-                {
-                    Console.WriteLine($"{player.Name} pushes with the dealer.");
-                }
-                else
-                {
-                    Console.WriteLine($"Dealer wins against {player.Name}.");
+                    if (playerTotal > 21)
+                    {
+                        Console.WriteLine($"{player.Name} busts! Dealer wins.");
+                    }
+                    else if (dealerTotal > 21 || playerTotal > dealerTotal)
+                    {
+                        Console.WriteLine($"{player.Name} wins against the dealer!");
+                    }
+                    else if (playerTotal == dealerTotal)
+                    {
+                        Console.WriteLine($"{player.Name} pushes with the dealer.");
+                    }
+                    else
+                    {
+                        Console.WriteLine($"Dealer wins against {player.Name}.");
+                    }
+
+                    handNumber +=1;
                 }
             }
 

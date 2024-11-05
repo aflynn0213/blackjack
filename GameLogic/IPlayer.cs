@@ -11,8 +11,7 @@ namespace BlackjackGame.GameLogic
 
         bool HasStood { get; set; }
         bool IsBust { get; }
-        int Total { get; }
-
+        bool midSplit { get; }
         void Hit(Card card);
         void DoubleDown(Card card);
         void Play(Deck deck); // Method for turn logic
