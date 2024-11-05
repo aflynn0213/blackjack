@@ -11,7 +11,6 @@ Welcome to the Blackjack Game! This project implements a command-line Blackjack 
 4. [Code Structure](#code-structure)
 5. [Future Enhancements](#future-enhancements)
 6. [Contributing](#contributing)
-7. [License](#license)
 
 ## Getting Started
 
@@ -103,7 +102,3 @@ Contributions are welcome! Please fork the repository and create a pull request 
 3. Commit your changes (`git commit -m 'Add new feature'`)
 4. Push to the branch (`git push origin feature/YourFeature`)
 5. Open a pull request
-
-## License
-
-Distributed under the MIT License. See `LICENSE` for more information.
